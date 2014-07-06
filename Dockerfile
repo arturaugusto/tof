@@ -49,9 +49,9 @@ RUN apt-get -q -y install libopencv-highgui2.4 libopencv-highgui-dev
 
 RUN wget http://python-tesseract.googlecode.com/files/python-tesseract_0.7-1.4_amd64.deb
 
-RUN sudo apt-get -q -y install tesseract-ocr
-RUN sudo dpkg -i python-tesseract*.deb
-RUN sudo apt-get -q -y -f install
+RUN apt-get -q -y install tesseract-ocr
+RUN dpkg -i python-tesseract*.deb
+RUN apt-get -q -y -f install
 
 RUN mkdir -p /opt
 RUN cd /opt && git clone https://github.com/tleyden/DetectText.git
