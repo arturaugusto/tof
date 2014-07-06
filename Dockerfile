@@ -1,6 +1,9 @@
 FROM debian:jessie
 
 RUN apt-get -q -y update
+RUN apt-get -q -y install wget
+RUN apt-get -q -y install unzip
+RUN apt-get -q -y install git
 
 RUN cd ~
 
@@ -46,9 +49,6 @@ RUN cd /src; pip install -r requirements.txt
 
 # stroke width transform
 
-RUN apt-get -q -y install wget
-RUN apt-get -q -y install unzip
-RUN apt-get -q -y install git
 
 RUN apt-get -q -y install libopencv-core2.4
 RUN apt-get -q -y install libopencv-core-dev
