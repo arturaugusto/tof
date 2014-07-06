@@ -1,25 +1,17 @@
 FROM debian:jessie
 
 RUN apt-get -q -y update
-RUN apt-get -q -y install wget
-RUN apt-get -q -y install unzip
-RUN apt-get -q -y install git
 
 RUN cd ~
 
 RUN wget http://python-tesseract.googlecode.com/files/python-tesseract_0.7-1.4_amd64.deb
 
 RUN apt-get -q -y install python-distutils-extra tesseract-ocr tesseract-ocr-eng libopencv-dev libtesseract-dev libleptonica-dev python-all-dev swig libcv-dev python-opencv python-numpy python-setuptools build-essential subversion
-#RUN svn checkout http://python-tesseract.googlecode.com/svn/trunk/src python-tesseract
-#RUN cd python-tesseract
-#RUN python config.py
-#RUN python setup.py clean
-#RUN python setup.py build
-#RUN python setup.py install --user
-RUN wget http://python-tesseract.googlecode.com/files/python-tesseract_0.7-1.4_amd64.deb
-RUN apt-get -q -y install tesseract-ocr
-RUN dpkg -i python-tesseract*.deb
-RUN apt-get -q -y -f install
+RUN svn checkout http://python-tesseract.googlecode.com/svn/trunk/src python-tesseract
+RUN cd python-tesseract
+RUN python setup.py clean
+RUN python setup.py build
+RUN python setup.py install --user
 
 RUN cd ~
 
@@ -49,6 +41,9 @@ RUN cd /src; pip install -r requirements.txt
 
 # stroke width transform
 
+RUN apt-get -q -y install wget
+RUN apt-get -q -y install unzip
+RUN apt-get -q -y install git
 
 RUN apt-get -q -y install libopencv-core2.4
 RUN apt-get -q -y install libopencv-core-dev
