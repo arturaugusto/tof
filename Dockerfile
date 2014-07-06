@@ -3,8 +3,28 @@ FROM ubuntu:14.04
 RUN apt-get -q -y update
 
 RUN mkdir -p /opt
+RUN mkdir -p /usr/local/share/tessdata/
 
+
+RUN apt-get -q -y install wget
+RUN apt-get -q -y install unzip
+RUN apt-get -q -y install tar
+RUN apt-get -q -y install gzip
 RUN apt-get -q -y install git
+
+# Get trained data
+
+RUN cd /opt && wget http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.eng.tar.gz
+RUN cd /opt && tar -zxvf tesseract-ocr-3.02.eng.tar.gz
+RUN cp -R /opt/tesseract-ocr/tessdata/* /usr/local/share/tessdata/
+
+# letsgodigital
+
+RUN cd /opt && git clone https://github.com/arturaugusto/display_ocr.git
+RUN cp -R /opt/display_ocr/letsgodigital/* /usr/local/share/tessdata/
+
+# install build deps
+
 RUN apt-get -q -y install gcc
 RUN apt-get -q -y install make
 RUN apt-get -q -y install cmake
@@ -15,10 +35,6 @@ RUN apt-get -q -y install libleptonica-dev
 #RUN apt-get -q -y install libtesseract3 libtesseract-dev
 #RUN apt-get -q -y install tesseract-ocr-eng
 
-RUN apt-get -q -y install wget
-RUN apt-get -q -y install unzip
-RUN apt-get -q -y install tar
-RUN apt-get -q -y install gzip
 RUN apt-get -q -y install autoconf automake libtool
 RUN apt-get -q -y install libpng12-dev
 RUN apt-get -q -y install libjpeg62-dev
