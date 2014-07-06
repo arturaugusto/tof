@@ -10,6 +10,8 @@ RUN apt-get -q -y install -t testing libtesseract3 libtesseract-dev
 RUN apt-get install -q -y -t testing tesseract-ocr-eng
 RUN apt-get -q -y install git
 RUN apt-get -q -y install gcc
+RUN apt-get -q -y install make
+RUN apt-get -q -y install cmake
 
 # In theory, should be able to set export TESSDATA_PREFIX=/usr/share/tesseract-ocr/, 
 # but when I tried I still got error: Error opening data file /usr/local/share/tessdata/eng.traineddata
@@ -59,16 +61,16 @@ RUN cd /opt/DetectText && cp DetectText /usr/local/bin
 # CTesseract
 
 RUN cd /opt && git clone https://github.com/dsoprea/CTesseract.git
-RUN cd /opt/CTesseract-master
+RUN cd /opt/CTesseract
 RUN mkdir build
-RUN cd /opt/CTesseract-master/build
+RUN cd /opt/CTesseract/build
 RUN cmake ..
 RUN make
 RUN make install
 
 # Copy to other local, dont know if its necessary
 
-RUN cp /opt/CTesseract-master/build/lib* /usr/lib/
+RUN cp /opt/CTesseract/build/lib* /usr/lib/
 
 
 # Add the Flask App
