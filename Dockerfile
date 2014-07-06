@@ -47,12 +47,20 @@ RUN apt-get -q -y install libopencv-ml2.4 libopencv-ml-dev
 RUN apt-get -q -y install libopencv-contrib2.4 libopencv-contrib-dev
 RUN apt-get -q -y install libopencv-highgui2.4 libopencv-highgui-dev
 
+RUN cd ~
+
 RUN wget http://python-tesseract.googlecode.com/files/python-tesseract_0.7-1.4_amd64.deb
 
-RUN apt-get -q -y install tesseract-ocr
-RUN dpkg -i python-tesseract*.deb
-RUN apt-get -q -y -f install
+RUN apt-get -q -y install python-distutils-extra tesseract-ocr tesseract-ocr-eng libopencv-dev libtesseract-dev libleptonica-dev python-all-dev swig libcv-dev python-opencv python-numpy python-setuptools build-essential subversion
+RUN svn checkout http://python-tesseract.googlecode.com/svn/trunk/src python-tesseract
+RUN cd python-tesseract
+RUN python config.py
+RUN python setup.py clean
+RUN python setup.py build
+RUN python setup.py install --user
 
+
+RUN cd ~
 RUN mkdir -p /opt
 RUN cd /opt && git clone https://github.com/tleyden/DetectText.git
 RUN cd /opt/DetectText && g++ -o DetectText TextDetection.cpp FeaturesMain.cpp -lopencv_core -lopencv_highgui -lopencv_imgproc -I/opt/DetectText
