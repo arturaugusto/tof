@@ -50,8 +50,8 @@ RUN cp /opt/CTesseract/build/lib* /usr/lib/
 # In theory, should be able to set export TESSDATA_PREFIX=/usr/share/tesseract-ocr/, 
 # but when I tried I still got error: Error opening data file /usr/local/share/tessdata/eng.traineddata
 # Workaround: just copy the data to where it expects
-RUN mkdir -p /usr/local/share/tessdata/
-RUN cp -R /usr/share/tesseract-ocr/tessdata/* /usr/local/share/tessdata/
+#RUN mkdir -p /usr/local/share/tessdata/
+#RUN cp -R /usr/share/tesseract-ocr/tessdata/* /usr/local/share/tessdata/
 
 # Install Python Setuptools
 RUN apt-get install -y python-setuptools
