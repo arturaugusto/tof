@@ -3,8 +3,9 @@ from flask import request
 from PIL import Image
 from subprocess import call
 import urllib
-import tesseract
-
+#import tesseract
+from tightocr.adapters.api_adapter import TessApi
+from tightocr.adapters.lept_adapter import pix_read
 app = Flask(__name__)
 
 #sample request:
@@ -29,10 +30,8 @@ def ocr():
 	try:
 		mImgFile = "tmp.png"
 		urllib.urlretrieve(img_url, mImgFile)
-		api = tesseract.TessBaseAPI()
-		api.Init(".",str(font),tesseract.OEM_DEFAULT)
-		api.SetVariable("tessedit_char_whitelist", str(wl))
-		api.SetPageSegMode(tesseract.PSM_AUTO)
+		t = TessApi(None, str(font));
+		t.set_variable('tessedit_char_whitelist', str(wl))
 		# Stroke Width Transform
 		swt_arg = request.args.get('swt')
 		if swt_arg == "1":
@@ -40,9 +39,12 @@ def ocr():
 			mImgFileOut = "tmp_pp.png"
 		else:
 			mImgFileOut = "tmp.png"
-		mBuffer=open(mImgFileOut,"rb").read()
-		result = tesseract.ProcessPagesBuffer(mBuffer,len(mBuffer),api)
-		api.End()
+		p = pix_read(mImgFileOut)
+		t.set_image_pix(p)
+		t.recognize()
+		result = str(t.get_utf8_text())
+		#result = tesseract.ProcessPagesBuffer(p,len(p),t)
+		#t.End()
 		call(["rm","tmp.png","tmp_pp.png"])
 	except:
 		result = "Error."

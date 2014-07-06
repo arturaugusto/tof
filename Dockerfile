@@ -4,23 +4,6 @@ RUN apt-get -q -y update
 
 RUN cd ~
 
-RUN apt-get -q -y install wget
-RUN wget http://python-tesseract.googlecode.com/files/python-tesseract_0.7-1.4_amd64.deb
-
-
-RUN apt-get -q -y install python-distutils-extra tesseract-ocr tesseract-ocr-eng libopencv-dev libtesseract-dev libleptonica-dev python-all-dev swig libcv-dev python-opencv python-numpy python-setuptools build-essential subversion
-#RUN svn checkout http://python-tesseract.googlecode.com/svn/trunk/src python-tesseract
-#RUN cd python-tesseract
-#RUN python setup.py clean
-#RUN python setup.py build
-#RUN python setup.py install --user
-
-RUN dpkg -i python-tesseract*.deb
-sudo apt-get -q -y -f install
-
-
-RUN cd ~
-
 # Tesseract
 RUN apt-get -q -y install libleptonica-dev
 RUN apt-get -q -y install -t testing libtesseract3 libtesseract-dev
@@ -47,10 +30,6 @@ RUN cd /src; pip install -r requirements.txt
 
 # stroke width transform
 
-RUN apt-get -q -y install wget
-RUN apt-get -q -y install unzip
-RUN apt-get -q -y install git
-
 RUN apt-get -q -y install libopencv-core2.4
 RUN apt-get -q -y install libopencv-core-dev
 RUN apt-get -q -y install libboost1.55-all-dev
@@ -66,12 +45,31 @@ RUN apt-get -q -y install libopencv-contrib2.4 libopencv-contrib-dev
 RUN apt-get -q -y install libopencv-highgui2.4 libopencv-highgui-dev
 
 
-RUN cd ~
+RUN apt-get -q -y install wget
+RUN apt-get -q -y install unzip
+RUN apt-get -q -y install git
+
 RUN mkdir -p /opt
+
 RUN cd /opt && git clone https://github.com/tleyden/DetectText.git
 RUN cd /opt/DetectText && g++ -o DetectText TextDetection.cpp FeaturesMain.cpp -lopencv_core -lopencv_highgui -lopencv_imgproc -I/opt/DetectText
 
 RUN cd /opt/DetectText && cp DetectText /usr/local/bin
+
+# CTesseract
+
+RUN cd /opt && git clone https://github.com/dsoprea/CTesseract.git
+RUN cd /opt/CTesseract-master
+RUN mkdir build
+RUN cd /opt/CTesseract-master/build
+RUN cmake ..
+RUN make
+RUN make install
+
+# Copy to other local, dont know if its necessary
+
+RUN cp /opt/CTesseract-master/build/lib* /usr/lib/
+
 
 # Add the Flask App
 
