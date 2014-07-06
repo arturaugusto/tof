@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:12.10
 
 RUN apt-get -q -y update
 
