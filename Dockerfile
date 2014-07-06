@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian
 
 RUN apt-get -q -y update
 
@@ -12,6 +12,18 @@ RUN apt-get -q -y install git
 RUN apt-get -q -y install gcc
 RUN apt-get -q -y install make
 RUN apt-get -q -y install cmake
+
+# CTesseract
+
+RUN cd /opt && git clone https://github.com/dsoprea/CTesseract.git
+RUN mkdir /opt/CTesseract/build
+RUN cd /opt/CTesseract/build && cmake .. && make && make install
+
+# Copy to other local, dont know if its necessary
+
+RUN cp /opt/CTesseract/build/lib* /usr/lib/
+
+# Tess data
 
 # In theory, should be able to set export TESSDATA_PREFIX=/usr/share/tesseract-ocr/, 
 # but when I tried I still got error: Error opening data file /usr/local/share/tessdata/eng.traineddata
@@ -58,15 +70,6 @@ RUN cd /opt/DetectText && g++ -o DetectText TextDetection.cpp FeaturesMain.cpp -
 
 RUN cd /opt/DetectText && cp DetectText /usr/local/bin
 
-# CTesseract
-
-RUN cd /opt && git clone https://github.com/dsoprea/CTesseract.git
-RUN mkdir /opt/CTesseract/build
-RUN cd /opt/CTesseract/build && cmake .. && make && make install
-
-# Copy to other local, dont know if its necessary
-
-RUN cp /opt/CTesseract/build/lib* /usr/lib/
 
 
 # Add the Flask App
