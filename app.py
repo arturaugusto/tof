@@ -1,6 +1,5 @@
 from flask import Flask, jsonify
 from flask import request
-from PIL import Image
 from subprocess import call
 import urllib
 #import tesseract
