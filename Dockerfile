@@ -27,7 +27,7 @@ RUN apt-get -q -y install libtiff4-dev
 RUN apt-get -q -y install zlib1g-dev
 
 RUN cd /opt && wget http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.02.tar.gz
-RUN cd /opt/tesseract-ocr && tar -zxvf tesseract-ocr-3.02.02.tar.gz
+RUN cd /opt && tar -zxvf tesseract-ocr-3.02.02.tar.gz
 RUN cd /opt/tesseract-ocr && ./autogen.sh
 RUN cd /opt/tesseract-ocr && ./configure
 RUN cd /opt/tesseract-ocr && make
