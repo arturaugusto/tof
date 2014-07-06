@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM debian
 
 RUN apt-get -q -y update
 
