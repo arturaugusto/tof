@@ -12,7 +12,7 @@ RUN apt-get -q -y install git
 RUN apt-get -q -y install gcc
 RUN apt-get -q -y install make
 RUN apt-get -q -y install cmake
-
+RUN apt-get -q -y install build-essential
 # CTesseract
 
 RUN cd /opt && git clone https://github.com/dsoprea/CTesseract.git
