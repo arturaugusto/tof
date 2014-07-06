@@ -6,8 +6,8 @@ RUN cd ~
 
 # Tesseract
 RUN apt-get -q -y install libleptonica-dev
-RUN apt-get -q -y install -t testing libtesseract3 libtesseract-dev
-RUN apt-get install -q -y -t testing tesseract-ocr-eng
+RUN apt-get -q -y install libtesseract3 libtesseract-dev
+RUN apt-get install -q -y tesseract-ocr-eng
 RUN apt-get -q -y install git
 RUN apt-get -q -y install gcc
 RUN apt-get -q -y install make
