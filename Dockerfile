@@ -1,18 +1,40 @@
-FROM ubuntu:12.10
+FROM ubuntu:14.04
 
 RUN apt-get -q -y update
 
 RUN cd ~
+RUN mkdir -p /opt
 
-# Tesseract
-RUN apt-get -q -y install libleptonica-dev
-RUN apt-get -q -y install libtesseract3 libtesseract-dev
-RUN apt-get install -q -y tesseract-ocr-eng
 RUN apt-get -q -y install git
 RUN apt-get -q -y install gcc
 RUN apt-get -q -y install make
 RUN apt-get -q -y install cmake
 RUN apt-get -q -y install build-essential
+
+# Tesseract
+RUN apt-get -q -y install libleptonica-dev
+#RUN apt-get -q -y install libtesseract3 libtesseract-dev
+#RUN apt-get -q -y install tesseract-ocr-eng
+
+RUN apt-get -q -y install wget
+RUN apt-get -q -y install unzip
+RUN apt-get -q -y install tar
+RUN apt-get -q -y install gzip
+RUN apt-get -q -y install autoconf automake libtool
+RUN apt-get -q -y install libpng12-dev
+RUN apt-get -q -y install libjpeg62-dev
+RUN apt-get -q -y install libtiff4-dev
+RUN apt-get -q -y install zlib1g-dev
+
+RUN cd /opt && wget http://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.02.tar.gz
+RUN cd /opt/tesseract-ocr && tar -zxvf tesseract-ocr-3.02.02.tar.gz
+RUN cd /opt/tesseract-ocr && ./autogen.sh
+RUN cd /opt/tesseract-ocr && ./configure
+RUN cd /opt/tesseract-ocr && make
+RUN cd /opt/tesseract-ocr && make install
+RUN cd /opt/tesseract-ocr && ldconfig
+
+
 # CTesseract
 
 RUN cd /opt && git clone https://github.com/dsoprea/CTesseract.git
@@ -59,11 +81,8 @@ RUN apt-get -q -y install libopencv-contrib2.4 libopencv-contrib-dev
 RUN apt-get -q -y install libopencv-highgui2.4 libopencv-highgui-dev
 
 
-RUN apt-get -q -y install wget
-RUN apt-get -q -y install unzip
 RUN apt-get -q -y install git
 
-RUN mkdir -p /opt
 
 RUN cd /opt && git clone https://github.com/tleyden/DetectText.git
 RUN cd /opt/DetectText && g++ -o DetectText TextDetection.cpp FeaturesMain.cpp -lopencv_core -lopencv_highgui -lopencv_imgproc -I/opt/DetectText
