@@ -2,7 +2,6 @@ FROM ubuntu:14.04
 
 RUN apt-get -q -y update
 
-RUN cd ~
 RUN mkdir -p /opt
 
 RUN apt-get -q -y install git
@@ -93,7 +92,6 @@ RUN cd /opt/DetectText && cp DetectText /usr/local/bin
 
 # Add the Flask App
 
-RUN cd ~
 ADD . /src
 
 # EXPOSE PORT
