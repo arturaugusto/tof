@@ -61,12 +61,8 @@ RUN cd /opt/DetectText && cp DetectText /usr/local/bin
 # CTesseract
 
 RUN cd /opt && git clone https://github.com/dsoprea/CTesseract.git
-RUN cd /opt/CTesseract
-RUN mkdir build
-RUN cd /opt/CTesseract/build
-RUN cmake ..
-RUN make
-RUN make install
+RUN mkdir /opt/CTesseract/build
+RUN cd /opt/CTesseract/build && cmake .. && make && make install
 
 # Copy to other local, dont know if its necessary
 
