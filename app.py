@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 
 # Database
-db = MySQLdb.connect(host="127.0.0.1", port=9990, user="root", passwd=os.environ["DBPASS"],
+db = MySQLdb.connect(host="127.0.0.1", port=9995, user="root", passwd=os.environ["DBPASS"],
 db="ocr")
 cursor = db.cursor()
 
