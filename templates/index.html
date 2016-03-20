@@ -145,14 +145,17 @@
 
 				<div class="panel panel-default">
 				  <div class="panel-heading">
-				    <h3 class="panel-title">Logged data</h3>
+				    <h3 class="panel-title">Data logging</h3>
 				  </div>
 				  <div class="panel-body">
 						<input type="checkbox" id="start_logging" value="start_logging">
 						<br><br>
 						<div class="form-group">
-					    <!--<label for="name">Logged data:</label>-->
-					    <textarea class="form-control" id="textAreaOut" rows="10"></textarea>
+					    <label for="interval">Logging interval (seconds)</label>
+					    <input class="form-control" name="interval" id="interval" value="5">
+
+					    <label for="experiment">Experiment name</label>
+					    <input class="form-control" name="experiment" id="experiment" value="Test">
 					  </div>
 				  </div>
 				</div>				
