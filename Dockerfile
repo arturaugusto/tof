@@ -68,6 +68,10 @@ RUN cp /opt/CTesseract/build/lib* /usr/lib/
 #RUN mkdir -p /usr/local/share/tessdata/
 #RUN cp -R /usr/share/tesseract-ocr/tessdata/* /usr/local/share/tessdata/
 
+# mysql
+RUN apt-get install -y mysql-client
+RUN apt-get install -y python-mysqldb
+
 # Install Python Setuptools
 RUN apt-get install -y python-setuptools
 
