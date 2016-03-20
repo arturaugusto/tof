@@ -1,3 +1,5 @@
+import os
+import MySQLdb
 from flask import Flask, jsonify
 from flask import request
 from flask import session, g, redirect, url_for, abort, render_template, flash
@@ -19,10 +21,16 @@ app = Flask(__name__)
 #sample request:
 #http://0.0.0.0:5000/ocr?swt=1&img=http://bit.ly/ocrimage
 
+
+# Database
+db = MySQLdb.connect(host="127.0.0.1", port=9990, user="root", passwd=os.environ["DBPASS"],
+db="ocr")
+cursor = db.cursor()
+
 @app.route('/')
 @cross_origin() # allow all origins all methods.
 def show_entries():
-    return render_template('/index.html')
+	return render_template('/index.html')
 @app.route('/ocr', methods = ['POST'])
 def ocr():
 	request_data = request.get_json(force=True)
@@ -49,8 +57,18 @@ def ocr():
 		t.set_image_pix(p)
 		t.recognize()
 		result = str(t.get_utf8_text())
+		try:
+			test = float(result)
+			# execute SQL select statement
+			sql = """INSERT INTO `experiment`(`name`, `readout`) VALUES ("{}",{})""".format("teste", float(result))
+			cursor.execute(sql)
+			# commit your changes
+			db.commit()
+		except Exception, e:
+			pass
 		#t.End()
 		#call(["rm","tmp.png","tmp_pp.png"])
+		return result
 	except:
 		print "Unexpected error:", sys.exc_info()[0]
 		result = "Error."
